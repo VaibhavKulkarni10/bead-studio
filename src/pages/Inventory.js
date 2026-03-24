@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { askClaude } from '../api';
 
 function Inventory() {
   const [beads, setBeads] = useState([]);
   const [name, setName] = useState('');
   const [color, setColor] = useState('');
   const [quantity, setQuantity] = useState('');
+  const [searchItem, setSearchItem] = useState('');
+  const [shopResult, setShopResult] = useState('');
+  const [shopLoading, setShopLoading] = useState(false);
 
   function addBead() {
     if (!name || !color || !quantity) return;
@@ -24,6 +28,27 @@ function Inventory() {
 
   function removeBead(id) {
     setBeads(beads.filter(bead => bead.id !== id));
+  }
+
+  async function findWhereToBuy() {
+    setShopLoading(true);
+    const prompt = `You are a jewelry supplies expert based in Australia.
+    A jewelry maker is looking for: ${searchItem}
+
+    Please provide:
+    1. Top online stores in Australia where they can buy this - include the actual website URLs
+    2. Any physical stores in Melbourne that might stock this with their addresses
+    3. If this exact item is hard to find, suggest 2-3 alternatives that would work just as well
+    4. Approximate price range in Australian dollars
+    5. Any tips for buying this item
+
+    Format the website links clearly like this: Website: https://www.example.com.au
+    Be specific and practical.`;
+
+
+    const response = await askClaude(prompt);
+    setShopResult(response);
+    setShopLoading(false);
   }
 
   return (
@@ -86,6 +111,35 @@ function Inventory() {
           ))}
         </div>
       )}
+
+      <div style={{ marginTop: '40px' }}>
+        <h3 style={{ color: '#6c3fc5' }}>🛍️ Shopping Assistant</h3>
+        <p style={{ color: '#666' }}>Can't find something? Let AI find it for you</p>
+        
+        <div style={{ background: '#f3effc', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+          <input
+            value={searchItem}
+            onChange={(e) => setSearchItem(e.target.value)}
+            placeholder="e.g. turquoise chip beads, gold lobster clasp, elastic cord..."
+            style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '2px solid #e0d4f7', fontSize: '15px', marginBottom: '12px' }}
+          />
+          <button
+            onClick={findWhereToBuy}
+            disabled={shopLoading || !searchItem}
+            style={{ background: '#6c3fc5', color: 'white', border: 'none', padding: '12px 30px', borderRadius: '8px', fontSize: '16px', cursor: 'pointer' }}
+          >
+            {shopLoading ? 'Finding...' : 'Find Where to Buy'}
+          </button>
+        </div>
+
+        {shopResult && (
+          <div style={{ background: 'white', padding: '20px', borderRadius: '12px', border: '2px solid #e0d4f7' }}>
+            <h3 style={{ color: '#6c3fc5' }}>Shopping Recommendations</h3>
+            <p style={{ whiteSpace: 'pre-wrap', color: '#444', lineHeight: '1.8' }}>{shopResult}</p>
+          </div>
+        )}
+      </div>
+
     </div>
   );
 }
