@@ -5,7 +5,7 @@ function Home() {
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
       <div style={{ padding: '60px 20px 40px' }}>
-        <h1 style={{ fontSize: '48px', color: '#6c3fc5', marginBottom: '10px' }}>💍 Bead Studio</h1>
+        <h1 style={{ fontSize: '48px', color: '#6c3fc5', marginBottom: '10px' }}>💍 Beadazzled </h1>
         <p style={{ fontSize: '20px', color: '#666', marginBottom: '40px' }}>
           Your AI powered personal jewelry assistant
         </p>

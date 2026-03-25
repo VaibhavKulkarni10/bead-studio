@@ -12,7 +12,7 @@ function App() {
     <Router>
       <div style={{ fontFamily: 'Arial', minHeight: '100vh' }}>
         <nav style={{ background: '#6c3fc5', padding: '15px 30px', display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '20px', marginRight: '20px' }}>💍 Bead Studio</span>
+          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '20px', marginRight: '20px' }}>💍 Beadazzled </span>
           <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
           <Link to="/face" style={{ color: 'white', textDecoration: 'none' }}>Face Analysis</Link>
           <Link to="/design" style={{ color: 'white', textDecoration: 'none' }}>Design Ideas</Link>
